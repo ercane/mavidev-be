@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Country Updated</title>
+</head>
+<body>
+<h1>Hello,</h1>
+    <p>Country updated. Updated info of country is below:</p>
+    <ul>
+        <li><b>Name:</b> <span th:text="${name}">[Name]</span></li>
+        <li><b>Code:</b> <span th:text="${code}">[Code]</span></li>
+        <li><b>Phone Code:</b> <span th:text="${phoneCode}">[Phone Code]</span></li>
+        <li><b>Status:</b> <span th:text="${status}">[Status]</span></li>
+        <li><b>Updated Date:</b> <span th:text="${updatedDate}">[UpdatedDate]</span></li>
+    </ul>
+    <p>Kind regards</p>
+</body>
+</html>

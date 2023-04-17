@@ -1,0 +1,72 @@
+version: '3.7'
+
+networks:
+  mavidev_bridge:
+    driver: bridge
+    name: mavidev_bridge
+
+
+services:
+  mavidev:
+    image: mavidev
+    container_name: mavidev
+    hostname: mavidev
+    restart: always
+    depends_on:
+      - redis
+      - rabbitmq
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+        reservations:
+          memory: 1g
+    networks:
+      - mavidev_bridge
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - ./log/:/log
+      - ./config/:/config
+    expose:
+      - 8081
+    ports:
+      - 8081:8081
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  mavidev-ui:
+    image: mavidev-ui
+    container_name: mavidev-ui
+    hostname: mavidev-ui
+    restart: always
+    networks:
+      - mavidev_bridge
+    ports:
+      - 8080:80
+
+  redis:
+    image: redis:6.2.3
+    container_name: redis
+    hostname: redis
+    restart: always
+    volumes:
+      - ./data/redis/data:/data
+    networks:
+      - mavidev_bridge
+    ports:
+      - "16379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    hostname: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=pass
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - mavidev_bridge
+
+
+

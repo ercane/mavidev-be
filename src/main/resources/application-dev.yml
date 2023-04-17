@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:5432/mavidev
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: false
+  redis:
+    host: redis
+    port: 6379
+    password: null
+    timeout: 60000
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: user
+    password: pass
+  # =========== Flyway ============ #
+  flyway:
+    locations: classpath:db/migration/common,classpath:db/migration/dev
+
+
+
+
+
+
+
+

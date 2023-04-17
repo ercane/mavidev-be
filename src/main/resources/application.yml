@@ -1,0 +1,156 @@
+app:
+  allowed-origins:
+    - http://localhost:*
+  allowed-methods:
+    - GET
+    - HEAD
+    - POST
+    - PUT
+    - PATCH
+    - DELETE
+    - OPTIONS
+    - TRACE
+  public-api-secret: LxhEcayh8Eeeq5WgUJppypcRX55t213Eraa
+  swagger:
+    name: Mavidev Api
+    desc: Mavidev Api rest api documentation
+    version: 1.0.0
+    urls:
+      - /docs
+      - /docs/**
+  notification-receivers:
+    - ercanemre25@gmail.com
+server:
+  servlet:
+    context-path: /api/v1
+  port: 8081
+  error:
+    whitelabel:
+      enabled: false
+  shutdown: graceful
+
+
+management:
+  endpoints:
+    enabled-by-default: true
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+      show-components: always
+      include: livenessState, readinessState
+      probes:
+        enabled: true
+      group:
+        liveness:
+          show-components: always
+          show-details: always
+          include: livenessState
+        readiness:
+          show-components: always
+          show-details: always
+          include: readinessState
+
+  info:
+    defaults:
+      enabled: false
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+spring:
+  application:
+    name: mavi-dev-api
+    instance_id: ${spring.application.name}-${APP_UUID}
+  cloud:
+    config:
+      enabled: false
+  data:
+    web:
+      pageable:
+        max-page-size: 100
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mavidev
+    username: postgres
+    password: postgres
+    hikari:
+      minimumIdle: 2
+      maximumPoolSize: 15
+      connectionTimeout: 30000
+      leakDetectionThreshold: 30000
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        globally_quoted_identifiers: true
+    open-in-view: false
+    show-sql: true
+
+  cache:
+    type: none
+  redis:
+    host: localhost
+    port: 6379
+    password: null
+    timeout: 60000
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  # =========== Flyway ============ #
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/common
+    placeholder-replacement: false
+
+  mail:
+    host: smtp.yandex.com
+    port: 465
+    from: ercanemre25@yandex.com
+    username: ercanemre25@yandex.com
+    password: pmmncdxqhabmfosb
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        debug: true
+        smtp:
+          from: ercanemre25@yandex.com
+          ssl:
+            enable: true
+            trust: smtp.yandex.com
+          auth: true
+
+logging:
+  level:
+    root: INFO
+    org:
+      hibernate: warn
+    com:
+      zaxxer:
+        hikari:
+          HikariConfig: DEBUG
+# Springdoc configurations
+springdoc:
+  api-docs:
+    path: /docs
+  swagger-ui:
+    path: /docs/ui
+    tagsSorter: alpha
+    operationsSorter: alpha
+
+
+
+
+
+
+
+
